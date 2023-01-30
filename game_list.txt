@@ -1,0 +1,6 @@
+Game Ideas
+
+Justin:
+-Text based adventure game
+-Tower defence game
+-Strategy game (like Civilization, but simpler)

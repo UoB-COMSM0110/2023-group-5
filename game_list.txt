@@ -1,11 +1,33 @@
-Game Ideas
+Idea Brainstorm:
+-Space Invaders but you're the alien (Jon
+-Mario?
+-RPG - Zelda inspired
+-Roguelike - generated content
+-Shadow of Mordor - Nemesis system. Enemies adapt to the ways you've defeated them.
+-Battle city - It is similar to Tank Trouble
+-Adventure puzzle games (like Cube Escape, Isoland, Gorogoa)
+-Text based adventure game (like Candybox) (no)
+-Tower defence game (like, Stick Wars, Age of War) (maybe)
+-Strategy game (like Civilization, but simpler) (maybe)
+-Super Mario but with a twist (i.e. varying gravity?) (no)
+-Candy crush? (no)
+-Angry birds (I like this one, but rotational dynamics are a pain) (no)
+-Tank trouble (Might be quite fun to do) (pending)
+-Space asteroid mining while fighting off pirate ships (maybe)
 
-Justin:
--Text based adventure game (like Candybox)
--Tower defence game (like, Stick Wars, Age of War)
--Strategy game (like Civilization, but simpler)
--Super Mario but with a twist (i.e. varying gravity?)
--Candy crush?
--Angry birds (I like this one, but rotational dynamics are a pain)
--Tank trouble (Might be quite fun to do)
--Space astroid mining while fighting off pirate ships
+Best four:
+-Tower defence
+-Space asteroid strategy game
+-Tank-Trouble
+-Raiden (like space defenders)
+
+Short-list Criteria:
+-Creativity
+-Fun to play
+-Technically Impressive
+-Ease of coding
+-Scope for expansion
+
+Final Two:
+-Tower defence
+-Space asteroid strategy game

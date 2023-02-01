@@ -1,0 +1,11 @@
+Game Ideas
+
+Justin:
+-Text based adventure game (like Candybox)
+-Tower defence game (like, Stick Wars, Age of War)
+-Strategy game (like Civilization, but simpler)
+-Super Mario but with a twist (i.e. varying gravity?)
+-Candy crush?
+-Angry birds (I like this one, but rotational dynamics are a pain)
+-Tank trouble (Might be quite fun to do)
+-Space astroid mining while fighting off pirate ships

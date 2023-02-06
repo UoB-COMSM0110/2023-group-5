@@ -20,3 +20,15 @@ User requests help with app
 1. User presses button to request support.
 2. App requests support interface with support team.
 3. Support team assists user.
+
+Set up run route:
+1. User inputs start and finish location. 
+2. User requests run route. 
+3. App requests map and public transport information from respective APIs. 
+4. App calculates multiple possible routes. 
+5. App displays routes to user. 
+6. User selects route. 
+7. App displays directions on screen. 
+8. User completes route. 
+9. User selects finish. 
+10. App display completion information (like points).

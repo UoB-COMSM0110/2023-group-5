@@ -32,11 +32,11 @@ class GameController implements Controller {
   }
   
   void keyPressed(int keyCode) {
-    pressedKeys.put(keyCode, true);
+    pressedKeys.put((char) keyCode, true);
   }
   
   void keyReleased(int keyCode){
-    pressedKeys.put(keyCode, false);
+    pressedKeys.put((char) keyCode, false);
   }
   
   private boolean isKeyPressed(char key) {

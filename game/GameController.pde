@@ -1,14 +1,16 @@
-class GameController {
-  final GameModel model;  
+interface GameController {
+  ArrayList<ArrayList<Character>> getKeys();
+  void update();
+}
+
+class GameController implements GameController {
+  ArrayList<ArrayList<Character>> keys
   
-  GameController(GameModel model) {
-    this.model = model;
+  ArrayList<ArrayList<Character>> getKeys() {
+    return keys;
   }
   
-  void keyPressed(int keyCode) {
+  void update(){
+    
   }
-  
-  void keyReleased(int keyCode) {
-  }
-  
 }

@@ -1,4 +1,8 @@
-class GameView {
+interface GameView {
+  void draw();
+}
+
+class GameView implements GameView{
   final GameModel model;
   
   GameView(GameModel model) {

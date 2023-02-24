@@ -9,6 +9,5 @@ interface GameModel {
 }
 
 class GameModel implements GameModel {  
-  int state;
-  State[] states;
+  
 }

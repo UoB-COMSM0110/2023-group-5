@@ -2,6 +2,7 @@ interface Model {
   PVector getSize ();
   boolean getGamePaused ();
   boolean setGamePaused (boolean gamePaused);
+  boolean getGameEnded ();
   int getScore ();
   PVector getApplePos ();
   ArrayList<PVector> getSnakePos ();

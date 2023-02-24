@@ -3,9 +3,9 @@ GameView view;
 GameController controller;
 
 void setup(){
-  GameModel model = new GameModel(400, 320);
-  GameController controller = new GameController(model);
-  GameView view = new GameView(model, controller);
+  model = new GameModel();
+  view = new GameView(model);
+  controller = new GameController(model);
   size(600, 400);
 }
 
@@ -16,7 +16,6 @@ void draw() {
   view.draw();
 }
 
-/*
 void keyPressed(){
   controller.keyPressed(keyCode);
 }
@@ -24,4 +23,3 @@ void keyPressed(){
 void keyReleased() {
   controller.keyReleased(keyCode);
 }
-*/

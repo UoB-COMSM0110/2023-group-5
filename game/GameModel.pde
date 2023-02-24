@@ -1,5 +1,5 @@
-interface GameModel {
-  int[] getSize ();
+interface Model {
+  PVector getSize ();
   boolean getGamePaused ();
   boolean setGamePaused (boolean gamePaused);
   int getScore ();
@@ -14,7 +14,7 @@ class Snake {
   private int length;
   private ArrayList<PVector> positions;
 
-  public static void Snake (int x, int y) {
+  public Snake (int x, int y) {
     direction = Direction.UP;
     length = 2;
 
@@ -24,7 +24,7 @@ class Snake {
     this.next();
   }
 
-  public void getPositions () {
+  public ArrayList<PVector> getPositions () {
     return positions;
   }
 
@@ -42,14 +42,17 @@ class Snake {
     PVector lastPos = positions.get(0);
     if (direction == Direction.UP) {
       PVector head = new PVector(lastPos.x, lastPos.y - 1);
+      positions.add(0, head);
     } else if (direction == Direction.DOWN) {
       PVector head = new PVector(lastPos.x, lastPos.y + 1);
+      positions.add(0, head);
     } else if (direction == Direction.LEFT) {
       PVector head = new PVector(lastPos.x - 1, lastPos.y);
+      positions.add(0, head);
     } else {
       PVector head = new PVector(lastPos.x + 1, lastPos.y);
+      positions.add(0, head);
     }
-    positions.add(0, head);
     while (positions.size() > length) {
       positions.remove(positions.size() - 1);
     }
@@ -57,7 +60,7 @@ class Snake {
 
 }
 
-class Model implements GameModel {
+class GameModel implements Model {
   private PVector size;
   private boolean gamePaused;
   private boolean gameEnded;
@@ -65,18 +68,18 @@ class Model implements GameModel {
   private Snake snake;
   private PVector apple;
 
-  public static void GameModel (int x, int y) {
+  public GameModel (int x, int y) {
     size = new PVector(x, y);
     gamePaused = true;
     gameEnded = false;
     score = 0;
-    snake = new Snake(random(0, size.x), random(0, size.y));
+    snake = new Snake((int) random(0, size.x), (int) random(0, size.y));
     while (collidedSnakeApple()) {
       apple = new PVector (random(0, size.x), random(0, size.y));
     }
   }
   
-  public int[] getSize () {return size;}
+  public PVector getSize () {return size;}
 
   public boolean getGamePaused () {return gamePaused;}
 
@@ -128,7 +131,7 @@ class Model implements GameModel {
     gamePaused = true;
     gameEnded = false;
     score = 0;
-    snake = new Snake(random(0, size.x), random(0, size.y));
+    snake = new Snake((int) random(0, size.x), (int) random(0, size.y));
     while (collidedSnakeApple()) {
       apple = new PVector (random(0, size.x), random(0, size.y));
     }

@@ -5,7 +5,7 @@ interface GameModel {
   int getScore ();
   PVector getApplePos ();
   ArrayList<PVector> getSnakePos ();
-  void update (Direction dir);
+  void update (Direction direction);
   void reset ();
 }
 
@@ -14,7 +14,7 @@ class Snake {
   private int length;
   private ArrayList<PVector> positions;
 
-  public static void Snake (int x, int y, Direction direction) {
+  public static void Snake (int x, int y) {
     direction = Direction.UP;
     length = 2;
 
@@ -29,7 +29,9 @@ class Snake {
   }
 
   public void setDirection (Direction direction) {
-    this.direction = direction;
+    if (direction != null) {
+      this.direction = direction;
+    }
   }
 
   public void grow () {
@@ -40,21 +42,19 @@ class Snake {
     PVector lastPos = positions.get(0);
     if (direction == Direction.UP) {
       PVector head = new PVector(lastPos.x, lastPos.y - 1);
-      positions.add(head);
     } else if (direction == Direction.DOWN) {
       PVector head = new PVector(lastPos.x, lastPos.y + 1);
-      positions.add(head);
     } else if (direction == Direction.LEFT) {
       PVector head = new PVector(lastPos.x - 1, lastPos.y);
-      positions.add(head);
-    } else if (direction == Direction.RIGHT) {
+    } else {
       PVector head = new PVector(lastPos.x + 1, lastPos.y);
-      positions.add(head);
     }
+    positions.add(0, head);
     while (positions.size() > length) {
       positions.remove(positions.size() - 1);
     }
   }
+
 }
 
 class Model implements GameModel {
@@ -70,8 +70,10 @@ class Model implements GameModel {
     gamePaused = true;
     gameEnded = false;
     score = 0;
-    snake = new Snake();
-    apple = new PVector (random(0, size.x), random(0, size.y));
+    snake = new Snake(random(0, size.x), random(0, size.y));
+    while (collidedSnakeApple()) {
+      apple = new PVector (random(0, size.x), random(0, size.y));
+    }
   }
   
   public int[] getSize () {return size;}
@@ -86,9 +88,50 @@ class Model implements GameModel {
   
   PVector getApplePos () {return apple.copy();}
   
-  ArrayList<PVector> getSnakePos () {}
-  
-  void update (Direction dir) {}
+  ArrayList<PVector> getSnakePos () {return snake.getPositions();}
 
-  void reset () {}
+  boolean collidedSnakeApple () {
+    ArrayList<PVector> positions = snake.getPositions();
+    for (PVector position : positions) {
+      if (position.x == apple.x || position.y == apple.y) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  void update (Direction direction) {
+    if (gameEnded || gamePaused) {return;}
+    if (direction != null) {
+      snake.setDirection(direction);
+    }
+    snake.next();
+
+    ArrayList<PVector> positions = snake.getPositions();
+    PVector head = positions.get(0);
+
+    if (head.x < 0 || head.x > size.x || head.y < 0 || head.y > size.y) {
+      gameEnded = true;
+    }
+
+    if (collidedSnakeApple()) {
+      snake.grow();
+      score++;
+      while (collidedSnakeApple()) {
+        apple = new PVector (random(0, size.x), random(0, size.y));
+      }
+    }
+
+  }
+
+  void reset () {
+    gamePaused = true;
+    gameEnded = false;
+    score = 0;
+    snake = new Snake(random(0, size.x), random(0, size.y));
+    while (collidedSnakeApple()) {
+      apple = new PVector (random(0, size.x), random(0, size.y));
+    }
+  }
+
 }

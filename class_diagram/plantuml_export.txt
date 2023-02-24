@@ -1,0 +1,69 @@
+@startuml
+'Diagram can be generated at: https://www.planttext.com/
+
+class GridPosition {
+-int gX, gY
+
++int[] getXY ()
++int getX ()
++int getY ()
+
++int[] getGXY ()
++int getGX ()
++int getGY ()
+
++void setGXY (int gX, int gY)
++void setGX (int gX)
++void setGY (int gY)
+}
+
+enum Direction {
+UP, DOWN, LEFT, RIGHT
+}
+
+Program "1" *-- "1" GameController
+Program "1" *-- "1" GameModel
+Program "1" *-- "1" GameView
+
+class Program {
+-GameModel model
+-GameView view
+-GameController controller
+}
+
+class GameController {
+-HashMap<Character, Boolean> pressedKeys
+-HashMap<Direction, ArrayList<Character>> keyCombinations
+-GameModel model
+-Direction direction = Direction.UP
+
++HashMap<Direction, ArrayList<Character>> getKeys()
++void update()
+}
+
+class GameModel {
+-GridPosition size
+-boolean gamePaused
+-boolean gameEnded
+-int score
+-Snake snake
+-GridPosition apple
+
++GridPosition getSize ()
++boolean getGamePaused ()
++boolean setGamePaused (boolean gamePaused)
++boolean getGameEnded ()
++int getScore ()
++GridPosition getApplePos ()
++ArrayList<GridPosition> getSnakePos ()
++void update (Direction direction)
++void reset ()
+}
+
+class GameView {
+-GameModel model
+
++void draw()
+}
+
+@enduml

@@ -34,7 +34,7 @@ class GameController implements Controller {
   void keyPressed(int keyCode) {
     pressedKeys.put((char) keyCode, true);
     if (keyCode == ' ') {
-      model.pause();
+      model.setGamePaused(!model.getGamePaused());
     }
   }
   

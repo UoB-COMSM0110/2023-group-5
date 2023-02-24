@@ -18,7 +18,7 @@ class Snake {
     direction = Direction.UP;
     length = 2;
 
-    position = new ArrayList<>();
+    positions = new ArrayList<>();
     PVector head = new PVector(x, y);
     positions.add(head);
     this.next();
@@ -37,19 +37,23 @@ class Snake {
   }
 
   public void next () {
+    PVector lastPos = positions.get(0);
     if (direction == Direction.UP) {
-
+      PVector head = new PVector(lastPos.x, lastPos.y - 1);
+      positions.add(head);
     } else if (direction == Direction.DOWN) {
-
+      PVector head = new PVector(lastPos.x, lastPos.y + 1);
+      positions.add(head);
     } else if (direction == Direction.LEFT) {
-
+      PVector head = new PVector(lastPos.x - 1, lastPos.y);
+      positions.add(head);
     } else if (direction == Direction.RIGHT) {
-
+      PVector head = new PVector(lastPos.x + 1, lastPos.y);
+      positions.add(head);
     }
-  }
-
-  public void reset () {
-
+    while (positions.size() > length) {
+      positions.remove(positions.size() - 1);
+    }
   }
 }
 

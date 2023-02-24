@@ -7,6 +7,7 @@ class GameController implements Controller {
   private final HashMap<Integer, Boolean> pressedKeys = new HashMap();
   private final ArrayList<ArrayList<Character>> keyCombinations = new ArrayList();
   private final GameModel model;
+  private Direction direction = Direction.UP;
   
   GameController(GameModel model){
     this.model = model;
@@ -24,14 +25,14 @@ class GameController implements Controller {
     pressedKeys.put(keyCode, false);
   }
   
-  boolean isPressed(int keyCode) {
+  boolean isKeyPressed(int keyCode) {
     return pressedKeys.getOrDefault(keyCode, false);
   }
   
   void update(){
-    if (model.getGameRunning()) {
+    if (!model.getGameRunning()) {
       return;
     }
-    model.getSnake().update();
+    model.update(direction);
   }
 }

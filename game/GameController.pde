@@ -39,7 +39,7 @@ class GameController implements Controller {
     pressedKeys.put(keyCode, false);
   }
   
-  boolean isKeyPressed(char key) {
+  private boolean isKeyPressed(char key) {
     return pressedKeys.getOrDefault(key, false);
   }
   
@@ -48,8 +48,7 @@ class GameController implements Controller {
       return;
     }
     for (Direction dir : Direction.values()){
-      ArrayList<Character> keys = getKeys().get(dir);
-      if (keys.stream().allMatch(this::isKeyPressed)){
+      if (getKeys().get(dir).stream().allMatch(this::isKeyPressed)){
         direction = dir;
         break;
       }

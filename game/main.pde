@@ -4,7 +4,7 @@ GameController controller;
 
 void setup(){
   model = new GameModel(400, 320);
-  view = new GameView(model);
+  view = new GameView(model, controller);
   controller = new GameController(model);
   size(600, 400);
 }

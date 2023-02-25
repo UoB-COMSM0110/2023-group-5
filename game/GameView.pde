@@ -1,8 +1,8 @@
-interface GameView {
+interface View {
   void draw();
 }
 
-class GameView implements GameView{
+class GameView implements View{
   final GameModel model;
   final GameController controller;
   
@@ -21,7 +21,7 @@ class GameView implements GameView{
   void drawScore() {
     fill(0);
     textSize(20);
-    int score = model.getScore;
+    int score = model.getScore();
     text("Scores:" + score, width/2-60, 30);
   }
   
@@ -54,6 +54,30 @@ class GameView implements GameView{
   }
   
   void drawKeys() {
-    ;
+    HashMap<Direction, ArrayList<Character>> hashKeys = controller.getKeys();
+    pushMatrix();
+    int wid = (width/4-20)/8;
+    translate(width*3/4, 40);
+    fill(0, 0, 255);
+    for(Direction dir: Direction.values()) {
+      int size = hashKeys.get(dir).size();
+      for(int i=0; i<size; i++){
+        switch(dir){
+        case UP:
+          text(hashKeys.get(dir).get(i), wid-5, 25+20*(i+1));
+          break;
+        case DOWN: 
+          text(hashKeys.get(dir).get(i), wid*3-5, 25+20*(i+1));
+          break;
+        case LEFT: 
+          text(hashKeys.get(dir).get(i), wid*5-5, 25+20*(i+1));
+          break;
+        case RIGHT: 
+          text(hashKeys.get(dir).get(i), wid*7-5, 25+20*(i+1));
+          break;
+        }
+      }
+    }
   }
+  
 }

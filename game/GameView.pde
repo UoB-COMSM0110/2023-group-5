@@ -18,6 +18,7 @@ class GameView implements View{
     drawKeys();
     drawApple();
     drawSnake();
+
   }
   
   void drawScore() {

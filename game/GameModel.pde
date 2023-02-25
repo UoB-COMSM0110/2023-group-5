@@ -1,38 +1,41 @@
 interface Model {
-  PVector getSize ();
+  GridPosition getSize ();
   boolean getGamePaused ();
-  boolean setGamePaused (boolean gamePaused);
+  void setGamePaused ();
+  void resetGamePaused ();
   boolean getGameEnded ();
   int getScore ();
-  PVector getApplePos ();
-  ArrayList<PVector> getSnakePos ();
+  GridPosition getApplePos ();
+  ArrayList<GridPosition> getSnakePos ();
   void update (Direction direction);
   void reset ();
 }
 
-class Snake {
-  private Direction direction;
+public class Snake {
+  private ArrayList<GridPosition> positions;
   private int length;
-  private ArrayList<PVector> positions;
+  private Direction direction;
 
-  public Snake (int x, int y) {
-    direction = Direction.UP;
-    length = 2;
-
+  public Snake (int x, int y, Direction direction) {
     positions = new ArrayList<>();
-    PVector head = new PVector(x, y);
+    if (direction != null) {
+      this.direction = direction;
+    } else {
+      this.direction = Direction.UP;
+    }
+    length = 5;
+
+    GridPosition head = new GridPosition(x, y);
     positions.add(head);
-    this.next();
+    while (positions.size() < length) {this.next();}
   }
 
-  public ArrayList<PVector> getPositions () {
+  public ArrayList<GridPosition> getPositions () {
     return positions;
   }
 
   public void setDirection (Direction direction) {
-    if (direction != null) {
-      this.direction = direction;
-    }
+    if (direction != null) {this.direction = direction;}
   }
 
   public void grow () {
@@ -40,102 +43,100 @@ class Snake {
   }
 
   public void next () {
-    PVector lastPos = positions.get(0);
-    if (direction == Direction.UP) {
-      PVector head = new PVector(lastPos.x, lastPos.y - 1);
-      positions.add(0, head);
-    } else if (direction == Direction.DOWN) {
-      PVector head = new PVector(lastPos.x, lastPos.y + 1);
-      positions.add(0, head);
-    } else if (direction == Direction.LEFT) {
-      PVector head = new PVector(lastPos.x - 1, lastPos.y);
-      positions.add(0, head);
-    } else {
-      PVector head = new PVector(lastPos.x + 1, lastPos.y);
-      positions.add(0, head);
+    GridPosition head = positions.get(0);
+    switch (direction) {
+      case UP:
+        positions.add(0, new GridPosition(head.getGX(), head.getGY() - 1));
+        break;
+      case DOWN:
+        positions.add(0, new GridPosition(head.getGX(), head.getGY() + 1));
+        break;
+      case LEFT:
+        positions.add(0, new GridPosition(head.getGX() - 1, head.getGY()));
+        break;
+      case RIGHT:
+        positions.add(0, new GridPosition(head.getGX() + 1, head.getGY()));
+        break;
+      default: break;
     }
     while (positions.size() > length) {
       positions.remove(positions.size() - 1);
     }
   }
-
 }
 
-class GameModel implements Model {
-  private PVector size;
+public class GameModel implements Model {
+  private final GridPosition size;
   private boolean gamePaused;
   private boolean gameEnded;
   private int score;
   private Snake snake;
-  private PVector apple;
+  private GridPosition apple;
 
-  public GameModel (int x, int y) {
-    size = new PVector(x, y);
+  public GameModel (int sizeX, int sizeY) {
+    size = new GridPosition(sizeX, sizeY);
     gamePaused = true;
     gameEnded = false;
     score = 0;
-    snake = new Snake((int) random(0, size.x), (int) random(0, size.y));
-    while (collidedSnakeApple()) {
-      apple = new PVector (random(0, size.x), random(0, size.y));
-    }
+    snake = new Snake(size.getGX() / 2, size.getGY() / 2, Direction.UP);
+    this.newApple();
   }
   
-  public PVector getSize () {return size;}
+  public GridPosition getSize () {return size;}
 
   public boolean getGamePaused () {return gamePaused;}
 
-  public boolean setGamePaused (boolean gamePaused) {this.gamePaused = gamePaused;}
+  public void setGamePaused () {gamePaused = true;}
+
+  public void resetGamePaused () {gamePaused = false;}
 
   public boolean getGameEnded () {return gameEnded;}
 
   public int getScore () {return score;}
   
-  PVector getApplePos () {return apple.copy();}
+  public GridPosition getApplePos () {return apple;}
   
-  ArrayList<PVector> getSnakePos () {return snake.getPositions();}
+  public ArrayList<GridPosition> getSnakePos () {return snake.getPositions();}
 
-  boolean collidedSnakeApple () {
-    ArrayList<PVector> positions = snake.getPositions();
-    for (PVector position : positions) {
-      if (position.x == apple.x || position.y == apple.y) {
+  private boolean collidedSnakeApple () {
+    ArrayList<GridPosition> positions = snake.getPositions();
+    for (GridPosition position : positions) {
+      if (position.getGX() == apple.getGX() && position.getGY() == apple.getGY()) {
         return true;
       }
     }
     return false;
   }
+
+  private void newApple () {
+    do {
+      apple = new GridPosition ((int) random(0, size.getGX()), (int) random(0, size.getGY()));
+    } while (collidedSnakeApple());
+  }
   
-  void update (Direction direction) {
+  public void update (Direction direction) {
     if (gameEnded || gamePaused) {return;}
-    if (direction != null) {
-      snake.setDirection(direction);
-    }
+
+    if (direction != null) {snake.setDirection(direction);}
     snake.next();
 
-    ArrayList<PVector> positions = snake.getPositions();
-    PVector head = positions.get(0);
-
-    if (head.x < 0 || head.x > size.x || head.y < 0 || head.y > size.y) {
+    GridPosition head = snake.getPositions().get(0);
+    if (head.getGX() < 0 || head.getGX() >= size.getGX() || head.getGY() < 0 || head.getGY() >= size.getGY()) {
       gameEnded = true;
     }
 
     if (collidedSnakeApple()) {
       snake.grow();
       score++;
-      while (collidedSnakeApple()) {
-        apple = new PVector (random(0, size.x), random(0, size.y));
-      }
+      this.newApple();
     }
-
   }
 
-  void reset () {
+  public void reset () {
     gamePaused = true;
     gameEnded = false;
     score = 0;
-    snake = new Snake((int) random(0, size.x), (int) random(0, size.y));
-    while (collidedSnakeApple()) {
-      apple = new PVector (random(0, size.x), random(0, size.y));
-    }
+    snake = new Snake((int) random(0, size.getGX()), (int) random(0, size.getGY()), Direction.UP);
+    this.newApple();
   }
-
 }

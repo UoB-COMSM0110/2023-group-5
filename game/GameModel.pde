@@ -1,8 +1,7 @@
 interface Model {
   GridPosition getSize ();
   boolean getGamePaused ();
-  void setGamePaused ();
-  void resetGamePaused ();
+  void toggleGamePaused ();
   boolean getGameEnded ();
   int getScore ();
   GridPosition getApplePos ();
@@ -86,9 +85,7 @@ public class GameModel implements Model {
 
   public boolean getGamePaused () {return gamePaused;}
 
-  public void setGamePaused () {gamePaused = true;}
-
-  public void resetGamePaused () {gamePaused = false;}
+  public void toggleGamePaused () {gamePaused = !gamePaused;}
 
   public boolean getGameEnded () {return gameEnded;}
 

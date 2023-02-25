@@ -1,13 +1,14 @@
+import java.util.Comparator;
+
 interface Controller {
-  HashMap<Direction, ArrayList<Character>> getKeys();
   void update();
 }
 
 class GameController implements Controller {
   private final HashMap<Character, Boolean> pressedKeys = new HashMap();
-  private final HashMap<Direction, ArrayList<Character>> keyCombinations = new HashMap();
   private final GameModel model;
   private Direction direction = Direction.UP;
+  private final HashMap<Direction, ArrayList<Character>> keyCombinations = new HashMap();
   
   GameController(GameModel model){
     this.model = model;
@@ -28,7 +29,22 @@ class GameController implements Controller {
     ArrayList<Character> list = keyCombinations.getOrDefault(dir, null);
     if (list != null) {
       list.add(key);
+      list.sort(Character::compare);
     }
+  }
+  
+  void addNewKeyToCombination() {
+    Direction shortestCombination = keyCombinations.entrySet().stream().sorted(Comparator.comparingInt(x -> x.getValue().size())).findFirst().get().getKey();
+    char newCharacter = (char)(random('Z' - 'A') + 'A');
+    for (int i = 0; i < 26; i++) {
+      newCharacter = (char) ((int) (newCharacter + i - 'A') % 26 + 'A');
+      ArrayList<Character> currentCharacters = new ArrayList(keyCombinations.get(shortestCombination));
+      currentCharacters.add(newCharacter);
+      if (keyCombinations.values().stream().noneMatch(x -> x.containsAll(currentCharacters))) {
+        break;
+      }      
+    }
+    addKeyToCombination(shortestCombination, newCharacter);
   }
   
   void keyPressed(int keyCode) {
@@ -47,7 +63,7 @@ class GameController implements Controller {
   }
   
   void update(){
-    if (model.getGameEnded()) {
+    if (model.getGamePaused() || model.getGameEnded()) {
       return;
     }
     for (Direction dir : Direction.values()){

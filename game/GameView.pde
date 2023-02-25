@@ -4,18 +4,19 @@ interface View {
 
 class GameView implements View{
   final GameModel model;
-  final GameController controller;
+  //final GameController controller;
   
-  public GameView(GameModel model, GameController controller) {
+  public GameView(GameModel model) {
     this.model = model;
-    this.controller = controller;
+    //this.controller = controller;
   }
   
   void draw(){
+    background(255);
     drawScore();
     drawKeyFrame();
     drawWall();
-    drawKeys();
+    //drawKeys();
     drawApple();
     drawSnake();
 
@@ -67,6 +68,7 @@ class GameView implements View{
     popMatrix();
   }
   
+  /*
   void drawKeys() {
     HashMap<Direction, ArrayList<Character>> hashKeys = controller.getKeys();
     pushMatrix();
@@ -94,20 +96,21 @@ class GameView implements View{
     }
     popMatrix();
   }
+  */
   
   void drawApple() {
-    int gridSize = 5; //(400 * 320 ?-> 40 * 32)
+    int gridSize = 10; //(400 * 320 ?-> 40 * 32)
     GridPosition apple = model.getApplePos();
     pushMatrix();
     translate(20, 40);
     noStroke();
     fill(255, 0, 0);
-    translate(apple.getX()+5, apple.getY()+5);
-    circle(apple.getX(), apple.getY(), 10);
+    circle(apple.getX()+gridSize/2, apple.getY()+gridSize/2, gridSize);
     popMatrix();
   }
 
   void drawSnake() {
+    int gridSize = 10;
     ArrayList<GridPosition> snake = model.getSnakePos();
     pushMatrix();
     translate(20, 40);
@@ -115,8 +118,7 @@ class GameView implements View{
     fill(0);
     for(int i=0; i<snake.size(); i++){
       pushMatrix();
-      translate(snake.get(i).getX()+5, snake.get(i).getY()+5);
-      square(snake.get(i).getX(), snake.get(i).getY(), 10);
+      square(snake.get(i).getX()+gridSize/2, snake.get(i).getY()+gridSize/2, gridSize);
       popMatrix();
     }
     popMatrix();

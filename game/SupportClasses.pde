@@ -15,8 +15,7 @@ interface GridPos {
 
 
 public class GridPosition implements GridPos {
-  // Screen size (720, 480)
-  private final int gridSize = 30;
+  private final int gridSize = 10;
   private int gX, gY;
   
   public GridPosition (int gX, int gY) {

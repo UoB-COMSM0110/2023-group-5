@@ -15,6 +15,7 @@ class GridPosition {
 +void setGXY (int gX, int gY)
 +void setGX (int gX)
 +void setGY (int gY)
++String toString ()
 }
 
 enum Direction {
@@ -51,7 +52,8 @@ class GameModel {
 
 +GridPosition getSize ()
 +boolean getGamePaused ()
-+boolean setGamePaused (boolean gamePaused)
++void setGamePaused ()
++void resetGamePaused ()
 +boolean getGameEnded ()
 +int getScore ()
 +GridPosition getApplePos ()

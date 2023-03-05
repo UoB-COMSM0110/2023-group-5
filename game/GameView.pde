@@ -118,7 +118,7 @@ class GameView implements View{
     fill(0);
     for(int i=0; i<snake.size(); i++){
       pushMatrix();
-      square(snake.get(i).getX()+gridSize/2, snake.get(i).getY()+gridSize/2, gridSize);
+      square(snake.get(i).getX(), snake.get(i).getY(), gridSize);
       popMatrix();
     }
     popMatrix();

@@ -4,11 +4,11 @@ interface View {
 
 class GameView implements View{
   final GameModel model;
-  //final GameController controller;
+  final GameController controller;
   
-  public GameView(GameModel model) {
+  public GameView(GameModel model, GameController controller) {
     this.model = model;
-    //this.controller = controller;
+    this.controller = controller;
   }
   
   void draw(){
@@ -16,7 +16,7 @@ class GameView implements View{
     drawScore();
     drawKeyFrame();
     drawWall();
-    //drawKeys();
+    drawKeys();
     drawApple();
     drawSnake();
 
@@ -68,7 +68,6 @@ class GameView implements View{
     popMatrix();
   }
   
-  /*
   void drawKeys() {
     HashMap<Direction, ArrayList<Character>> hashKeys = controller.getKeys();
     pushMatrix();
@@ -96,7 +95,6 @@ class GameView implements View{
     }
     popMatrix();
   }
-  */
   
   void drawApple() {
     int gridSize = 10; //(400 * 320 ?-> 40 * 32)

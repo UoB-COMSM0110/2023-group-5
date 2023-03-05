@@ -1,5 +1,5 @@
 GameModel model;
- GameController controller;
+GameController controller;
 GameView view;
 
 Direction direction; // Delete when no longer needed. 
@@ -14,7 +14,7 @@ void setup(){
   // Since each grid is 10x10, use 400/10=40, 320/10=32 for the GameModel dimensions
   model = new GameModel(40, 32);
   controller = new GameController(model);
-  view = new GameView(model);
+  view = new GameView(model, controller);
 }
 
 void draw() {

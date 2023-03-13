@@ -125,6 +125,7 @@ public class GameModel implements Model {
     if (collidedSnakeApple()) {
       snake.grow();
       score++;
+      controller.addNewKeyToCombination();
       this.newApple();
     }
   }

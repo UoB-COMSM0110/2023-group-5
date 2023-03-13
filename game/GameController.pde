@@ -33,7 +33,11 @@ class GameController implements Controller {
     }
   }
   
+  //int i = 0;
+  
   void addNewKeyToCombination() {
+    //i++;
+    //if (i%3!=0) return;
     Direction shortestCombination = keyCombinations.entrySet().stream().sorted(Comparator.comparingInt(x -> x.getValue().size())).findFirst().get().getKey();
     char newCharacter = (char)(random('Z' - 'A') + 'A');
     for (int i = 0; i < 26; i++) {
